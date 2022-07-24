@@ -1,0 +1,172 @@
+<ng-container>
+  <mat-card class="ml-4 mr-4">
+    <mat-card-title>
+      <h1 class="h1">Cadastro de Paciente</h1>
+      <hr />
+    </mat-card-title>
+    <mat-card-content class="mt-4">
+      <form [formGroup]="profileForm" (ngSubmit)="salvarPaciente()">
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Prontuário</mat-label>
+              <input formControlName="prontuario" matInput />
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Nome</mat-label>
+              <input formControlName="nome" matInput />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Sobrenome</mat-label>
+              <input formControlName="sobrenome" matInput />
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Data de nascimento</mat-label>
+              <input
+                matInput
+                formControlName="dataNascimento"
+                [matDatepicker]="picker"
+              />
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Gênero</mat-label>
+              <mat-select formControlName="genero">
+                <mat-option
+                  *ngFor="let gen of generos; let i = index"
+                  [value]="i"
+                  >{{ gen }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>CPF</mat-label>
+              <input
+                [textMask]="{ mask: masks.cpf }"
+                type="tel"
+                formControlName="cpf"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>RG</mat-label>
+              <input formControlName="rg" matInput />
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>UF do RG</mat-label>
+              <mat-select formControlName="ufRG">
+                <mat-option value="go">GO</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>E-mail</mat-label>
+              <input type="email" formControlName="email" matInput />
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Celular</mat-label>
+              <input
+                [textMask]="{ mask: masks.celularMask }"
+                type="tel"
+                formControlName="celular"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Telefone fixo</mat-label>
+              <input
+                [textMask]="{ mask: masks.telefoneMask }"
+                type="tel"
+                formControlName="telefonefixo"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Convênio</mat-label>
+              <mat-select formControlName="convenio">
+                <mat-option value="go">GO</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Carteirinha do convênio</mat-label>
+              <input formControlName="carteirinhaconvenio" matInput />
+            </mat-form-field>
+          </div>
+
+          <div class="col-6">
+            <mat-form-field class="w-100" appearance="fill">
+              <mat-label>Validade da carteirinha</mat-label>
+              <input
+                [textMask]="{ mask: masks.validadeCarteirinha }"
+                formControlName="validadecarteirinha"
+                matInput
+              />
+              <mat-hint>MM/YYYY</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-100 mt-4"
+          mat-raised-button
+          color="primary"
+        >
+          Salvar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
