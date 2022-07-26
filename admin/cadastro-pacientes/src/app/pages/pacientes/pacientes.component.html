@@ -1,23 +1,98 @@
-<ng-container>
-  <mat-card class="ml-4 mr-4">
+<!-- Import App Toolbar -->
+<app-header></app-header>
+<!-- Import App Toolbar -->
+
+<!-- Pacientes Content -->
+<ng-container class="h-100">
+  <mat-card class="ml-4 mr-4 mt-4 mb-4">
     <mat-card-title>
-      <h1 class="h1">Cadastro de Paciente</h1>
+      <h1 class="h1">Pacientes</h1>
       <hr />
     </mat-card-title>
     <mat-card-content class="mt-4">
-      <form [formGroup]="profileForm" (ngSubmit)="salvarPaciente()">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">ID</th>
+              <th scope="col">Nome</th>
+              <th scope="col">sobrenome</th>
+              <th scope="col">dataNascimento</th>
+              <th scope="col">genero</th>
+              <th scope="col">cpf</th>
+              <th scope="col">email</th>
+              <th scope="col">celular</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let paciente of pacientes
+                  | slice: (page - 1) * pageSize:page * pageSize
+              "
+            >
+              <td>
+                <button
+                  (click)="openModalDetalhes(content, paciente)"
+                  mat-button
+                  color="primary"
+                >
+                  Detalhes
+                </button>
+              </td>
+              <th scope="row">{{ paciente.id }}</th>
+              <td>{{ paciente.nome }}</td>
+              <td>{{ paciente.sobrenome }}</td>
+              <td>{{ formatDate(paciente.dataNascimento) }}</td>
+              <td>{{ genero[paciente.genero] }}</td>
+              <td>{{ paciente.cpf }}</td>
+              <td>{{ paciente.email }}</td>
+              <td>{{ paciente.celular }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+    <mat-card-footer class="text-center d-block ml-auto mr-auto">
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="pacientes.length"
+      ></ngb-pagination>
+    </mat-card-footer>
+  </mat-card>
+</ng-container>
+<!-- Pacientes Content -->
+
+<!-- Modal detalhes -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Atualizar {{ currentPaciente.nome }}
+    </h4>
+
+    <button mat-mini-fab color="primary" (click)="modal.dismiss('Cross click')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Detalhes do paciente -->
+
+    <mat-card class="ml-4 mr-4">
+      <mat-card-content class="mt-4">
         <div class="row mt-2">
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Prontuário</mat-label>
-              <input formControlName="prontuario" matInput />
+              <input [(ngModel)]="currentPaciente.prontuario" matInput />
             </mat-form-field>
           </div>
 
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Nome</mat-label>
-              <input formControlName="nome" matInput />
+              <input [(ngModel)]="currentPaciente.nome" matInput />
             </mat-form-field>
           </div>
         </div>
@@ -26,7 +101,7 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Sobrenome</mat-label>
-              <input formControlName="sobrenome" matInput />
+              <input [(ngModel)]="currentPaciente.sobrenome" matInput />
             </mat-form-field>
           </div>
 
@@ -35,7 +110,7 @@
               <mat-label>Data de nascimento</mat-label>
               <input
                 matInput
-                formControlName="dataNascimento"
+                [(ngModel)]="currentPaciente.dataNascimento"
                 [matDatepicker]="picker"
               />
               <mat-hint>MM/DD/YYYY</mat-hint>
@@ -52,7 +127,7 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Gênero</mat-label>
-              <mat-select formControlName="genero">
+              <mat-select [(ngModel)]="currentPaciente.genero">
                 <mat-option
                   *ngFor="let gen of generos; let i = index"
                   [value]="i"
@@ -65,13 +140,10 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>CPF</mat-label>
-              <mat-hint *ngIf="getErrors('cpf')?.cpf" class="text-danger"
-                >Digite um CPF válido</mat-hint
-              >
               <input
                 [textMask]="{ mask: masks.cpf }"
                 type="tel"
-                formControlName="cpf"
+                [(ngModel)]="currentPaciente.cpf"
                 matInput
               />
             </mat-form-field>
@@ -82,17 +154,14 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>RG</mat-label>
-              <mat-hint *ngIf="getErrors('rg')?.rg" class="text-danger"
-                >Digite um RG válido</mat-hint
-              >
-              <input formControlName="rg" matInput />
+              <input [(ngModel)]="currentPaciente.rg" matInput />
             </mat-form-field>
           </div>
 
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>UF do RG</mat-label>
-              <mat-select formControlName="ufRG">
+              <mat-select [(ngModel)]="currentPaciente.ufRG">
                 <mat-option value="go">GO</mat-option>
               </mat-select>
             </mat-form-field>
@@ -103,7 +172,11 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>E-mail</mat-label>
-              <input type="email" formControlName="email" matInput />
+              <input
+                type="email"
+                [(ngModel)]="currentPaciente.email"
+                matInput
+              />
             </mat-form-field>
           </div>
 
@@ -113,7 +186,7 @@
               <input
                 [textMask]="{ mask: masks.celularMask }"
                 type="tel"
-                formControlName="celular"
+                [(ngModel)]="currentPaciente.celular"
                 matInput
               />
             </mat-form-field>
@@ -127,7 +200,7 @@
               <input
                 [textMask]="{ mask: masks.telefoneMask }"
                 type="tel"
-                formControlName="telefonefixo"
+                [(ngModel)]="currentPaciente.telefonefixo"
                 matInput
               />
             </mat-form-field>
@@ -136,7 +209,7 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Convênio</mat-label>
-              <mat-select formControlName="convenio">
+              <mat-select [(ngModel)]="currentPaciente.convenio">
                 <mat-option value="Convenio 1">Convenio 1</mat-option>
                 <mat-option value="Convenio 2">Convenio 2</mat-option>
                 <mat-option value="Convenio 3">Convenio 3</mat-option>
@@ -149,7 +222,10 @@
           <div class="col">
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>Carteirinha do convênio</mat-label>
-              <input formControlName="carteirinhaconvenio" matInput />
+              <input
+                [(ngModel)]="currentPaciente.carteirinhaconvenio"
+                matInput
+              />
             </mat-form-field>
           </div>
 
@@ -158,23 +234,22 @@
               <mat-label>Validade da carteirinha</mat-label>
               <input
                 [textMask]="{ mask: masks.validadeCarteirinha }"
-                formControlName="validadecarteirinha"
+                [(ngModel)]="currentPaciente.validadecarteirinha"
                 matInput
               />
               <mat-hint>MM/YYYY</mat-hint>
             </mat-form-field>
           </div>
         </div>
+      </mat-card-content>
+    </mat-card>
 
-        <button
-          type="submit"
-          class="w-100 mt-4"
-          mat-raised-button
-          color="primary"
-        >
-          Salvar
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</ng-container>
+    <!-- Detalhes do paciente -->
+  </div>
+  <div class="modal-footer">
+    <button (click)="modal.close('Save')" mat-button color="primary">
+      Salvar
+    </button>
+  </div>
+</ng-template>
+<!-- Modal detalhes -->

@@ -1,6 +1,9 @@
-.main-content {
-  height: 100%;
+mat-drawer-content {
+  overflow: hidden !important;
 }
-.mat-sidenav {
-  width: 200px;
+
+.fixed-indeterminate {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 }

@@ -16,13 +16,21 @@ export class MenuComponent implements OnInit {
   }
 
   _generateMenus() {
-    const arrayList = Array.from(new Array(1), (val, index) => {
+    const arrayList = Array.from(new Array(2), (val, index) => {
       switch (index) {
         case 0:
           return {
             name: "Inicio",
             icon: "home",
-            path: "",
+            path: "/",
+          };
+          break;
+
+        case 1:
+          return {
+            name: "Pacientes",
+            icon: "people",
+            path: "/pacientes",
           };
           break;
       }

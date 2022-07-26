@@ -1,27 +1,14 @@
-<mat-progress-bar
-  [hidden]="isLoadingShow"
-  color="warn"
-  mode="indeterminate"
-></mat-progress-bar>
 <mat-drawer-container class="main-content" #sidenav>
-  <mat-drawer mode="over" opened>
+  <mat-drawer mode="over">
     <app-menu></app-menu>
   </mat-drawer>
   <mat-drawer-content>
-    <!-- App Toolbar -->
-    <mat-toolbar color="primary">
-      <button
-        (click)="sidenav.opened ? sidenav.close() : sidenav.open()"
-        mat-icon-button
-      >
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>{{ title }}</span>
-    </mat-toolbar>
-    <!-- App Toolbar -->
-
-    <!-- Cadastro Pacientes -->
-    <app-paciente-cadastro class="p-2"></app-paciente-cadastro>
-    <!-- Cadastro Pacientes -->
+    <mat-progress-bar
+      [hidden]="isLoadingShow"
+      color="warn"
+      class="fixed-indeterminate"
+      mode="indeterminate"
+    ></mat-progress-bar>
+    <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>

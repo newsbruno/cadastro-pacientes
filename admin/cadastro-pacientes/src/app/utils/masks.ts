@@ -2,8 +2,7 @@ export class Masks {
   public celularMask = [
     "(",
     /[0-9]/,
-    /\d/,
-    /\d/,
+    /[0-9]/,
     ")",
     " ",
     /\d/,
@@ -21,8 +20,7 @@ export class Masks {
   public telefoneMask = [
     "(",
     /[0-9]/,
-    /\d/,
-    /\d/,
+    /[0-9]/,
     ")",
     " ",
     /\d/,

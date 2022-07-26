@@ -12,7 +12,11 @@ import { MatListModule } from "@angular/material/list";
 import { MenuComponent } from "./menu/menu/menu.component";
 import { PacienteCadastroComponent } from "./pages/paciente-cadastro/paciente-cadastro.component";
 import { MatCardModule } from "@angular/material/card";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbModalModule,
+  NgbModule,
+  NgbPaginationModule,
+} from "@ng-bootstrap/ng-bootstrap";
 import {
   MatFormFieldModule,
   MatInputModule,
@@ -23,10 +27,31 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { TextMaskModule } from "angular2-text-mask";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { HttpClientModule } from "@angular/common/http";
+import { PacientesComponent } from "./pages/pacientes/pacientes.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
+import { HomeComponent } from "./pages/home/home/home.component";
+import { HeaderComponent } from "./header/header.component";
+import { NgBrazil } from "ng-brazil";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTableModule } from "@angular/material/table";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, PacienteCadastroComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    PacienteCadastroComponent,
+    PacientesComponent,
+    HomeComponent,
+    HeaderComponent,
+  ],
   imports: [
+    RouterModule,
+    CommonModule,
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -45,8 +70,16 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
     NgbModule,
     TextMaskModule,
     MatProgressBarModule,
+    HttpClientModule,
+    NgBrazil,
+    MatSnackBarModule,
+    MatTableModule,
+    NgbPaginationModule,
+    NgbModalModule,
+    FormsModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
+  exports: [HeaderComponent],
 })
 export class AppModule {}

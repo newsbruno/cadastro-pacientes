@@ -6,10 +6,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import { MatSidenav } from "@angular/material";
-import { Title } from "@angular/platform-browser";
+import { Subject } from "rxjs";
 import { LoadControlService } from "./services/load-control/load-control.service";
 import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { DrawerControllerService } from "./services/drawer-controller/drawer-controller.service";
 
 @Component({
   selector: "app-root",
@@ -17,25 +17,21 @@ import { Subject } from "rxjs";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  title: string = "";
-
-  @ViewChild("sidenav") sidenav: MatSidenav;
   isLoadingShow: boolean = true;
-
   private readonly destroy = new Subject();
+  @ViewChild("sidenav") sidenav: MatSidenav;
 
   constructor(
-    private titleService: Title,
-    private loadControlService: LoadControlService
+    private loadControlService: LoadControlService,
+    private drawerControllerService: DrawerControllerService
   ) {}
 
   ngAfterViewInit(): void {
     this.initLoadingVisibility();
+    this.initDrawerController();
   }
 
-  ngOnInit(): void {
-    this.title = this.titleService.getTitle();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy.next();
@@ -46,5 +42,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadControlService.loadVisibleisHidden
       .pipe(takeUntil(this.destroy))
       .subscribe((value) => (this.isLoadingShow = value));
+  }
+
+  initDrawerController() {
+    this.drawerControllerService.setDrawer(this.sidenav);
   }
 }

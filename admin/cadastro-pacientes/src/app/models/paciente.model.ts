@@ -1,10 +1,10 @@
-import { Genero } from "./../enums/genero.enum";
 export interface Paciente {
+  id: number;
   prontuario: string;
   nome: string;
   sobrenome: string;
   dataNascimento: string;
-  genero: Genero;
+  genero: number;
   cpf: string;
   rg: string;
   ufRG: string;
