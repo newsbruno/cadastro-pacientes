@@ -27,6 +27,7 @@
     "angular2-text-mask": "^9.0.0",
     "bootstrap": "^4.6.2",
     "core-js": "^2.5.4",
+    "easy-location-br": "^1.0.9",
     "jquery": "^3.6.0",
     "js-brasil": "^2.5.3",
     "moment": "^2.29.4",

@@ -77,6 +77,7 @@ import { FormsModule } from "@angular/forms";
     NgbPaginationModule,
     NgbModalModule,
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent],

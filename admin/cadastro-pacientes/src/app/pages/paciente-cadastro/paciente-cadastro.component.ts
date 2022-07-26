@@ -8,6 +8,7 @@ import { ApiService } from "src/app/services/api/api.service";
 import { NgBrazilValidators } from "ng-brazil";
 import { MatSnackBar } from "@angular/material";
 import { ApiResponseModel } from "src/app/models/api-response.model";
+import { getAllStates } from "easy-location-br";
 
 @Component({
   selector: "app-paciente-cadastro",
@@ -42,10 +43,9 @@ export class PacienteCadastroComponent implements OnInit {
   });
 
   masks = new Masks();
-
   genero = Genero;
-
   generos: Array<string> = [];
+  estados = [];
 
   constructor(
     private loadControlService: LoadControlService,
@@ -55,6 +55,7 @@ export class PacienteCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.initGeneros();
+    this.estados = getAllStates();
   }
 
   //Parse dos generos

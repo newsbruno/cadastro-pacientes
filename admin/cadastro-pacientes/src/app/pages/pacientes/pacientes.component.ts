@@ -10,6 +10,7 @@ import { MatSnackBar } from "@angular/material";
 import { ApiResponseModel } from "src/app/models/api-response.model";
 import * as moment from "moment";
 import { Genero } from "src/app/enums/genero.enum";
+import { getAllStates } from "easy-location-br";
 
 @Component({
   selector: "app-pacientes",
@@ -25,6 +26,8 @@ export class PacientesComponent implements OnInit, OnDestroy {
   currentPaciente: Paciente = <any>{};
   masks = new Masks();
   genero = Genero;
+  estados = [];
+  generos: Array<string> = [];
 
   constructor(
     private apiService: ApiService,
@@ -40,6 +43,8 @@ export class PacientesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initPacientes();
+    this.estados = getAllStates();
+    this.initGeneros();
   }
 
   //Carregar todos os pacientes
@@ -99,5 +104,12 @@ export class PacientesComponent implements OnInit, OnDestroy {
 
   formatDate(date: string) {
     return moment(date).format("DD/MM/YYYY");
+  }
+
+  //Parse dos generos
+  private initGeneros() {
+    var parse = Object.keys(this.genero);
+    parse = parse.slice(parse.length / 2);
+    this.generos = parse;
   }
 }

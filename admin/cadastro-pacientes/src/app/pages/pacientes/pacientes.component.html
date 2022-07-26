@@ -66,7 +66,7 @@
 <!-- Pacientes Content -->
 
 <!-- Modal detalhes -->
-<ng-template #content let-modal>
+<ng-template class="w-75" #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
       Atualizar {{ currentPaciente.nome }}
@@ -162,7 +162,11 @@
             <mat-form-field class="w-100" appearance="fill">
               <mat-label>UF do RG</mat-label>
               <mat-select [(ngModel)]="currentPaciente.ufRG">
-                <mat-option value="go">GO</mat-option>
+                <mat-option
+                  *ngFor="let estado of estados"
+                  [value]="estado.id"
+                  >{{ estado.id }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>

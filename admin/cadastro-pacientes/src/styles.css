@@ -19,3 +19,8 @@ body {
   z-index: 100;
   width: var(--content-width, 100%);
 }
+
+.cdk-global-overlay-wrapper,
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
